@@ -10,14 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('vaksin_detail', function (Blueprint $table) {
+        Schema::create('tb_gaji', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal_ovk');
-            $table->string('jenis_ovk');
-            $table->integer('jumlah_ayam');
-            $table->date('next_ovk');
-            $table->integer('biaya_ovk');
-            $table->integer('total_biaya');
+            $table->string('nama_karyawan')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->integer('gaji')->nullable();
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('vaksin_detail');
+        Schema::dropIfExists('tb_gaji');
     }
 };

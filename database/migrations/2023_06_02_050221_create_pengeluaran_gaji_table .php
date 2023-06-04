@@ -10,12 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tenaga_kerja', function (Blueprint $table) {
+        Schema::create('tb_pengeluaran_gaji', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_karyawan');
-            $table->string('jabatan');
-            $table->integer('gaji');
-            $table->integer('total_gaji');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenaga_kerja');
+        Schema::dropIfExists('tb_pengeluaran_gaji');
     }
 };

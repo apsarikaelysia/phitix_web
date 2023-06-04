@@ -10,14 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('data_ayam', function (Blueprint $table) {
+        Schema::create('tb_role', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal_masuk');
-            $table->integer('jumlah_masuk');
-            $table->integer('harga_satuan');
-            $table->integer('total_harga');
-            $table->integer('mati');
-            $table->integer('total_ayam');
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_ayam');
+        Schema::dropIfExists('tb_role');
     }
 };

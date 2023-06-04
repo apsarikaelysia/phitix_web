@@ -10,14 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('distribusi', function (Blueprint $table) {
+        Schema::create('tb_pengeluaran_ayam', function (Blueprint $table) {
             $table->id();
-            $table->string('customer');
-            $table->date('tanggal_distribusi');
-            $table->integer('contact');
-            $table->integer('harga_satuan');
-            $table->integer('payment');
-            $table->string('address');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('distribusi');
+        Schema::dropIfExists('tb_pengeluaran_ayam');
     }
 };

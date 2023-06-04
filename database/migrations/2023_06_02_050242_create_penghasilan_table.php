@@ -10,12 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('pendapatan', function (Blueprint $table) {
+        Schema::create('tb_penghasilan', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->integer('pemasukan');
-            $table->integer('pengeluaran');
             $table->integer('pendapatan');
+            $table->integer('pengeluaran_ayam');
+            $table->integer('pengeluaran_pakan');
+            $table->integer('pengeluaran_gaji');
+            $table->integer('pengeluaran_vaksin');
+            $table->integer('penghasilan');
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('pendapatan');
+        Schema::dropIfExists('tb_penghasilan');
     }
 };
