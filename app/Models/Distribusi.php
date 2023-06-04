@@ -2,22 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\DetailPendapatan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Distribusi extends Model
 {
     use HasFactory;
 
-    protected $table = 'distribusi';
+    protected $table = 'tb_distribusi';
 
     protected $fillable = [
         'customer',
-        'tanggal_distribusi',
+        'tanggal',
         'contact',
+        'total_ayam',
         'harga_satuan',
         'payment',
-        'address',
     ];
 
+    public function detailpendapatan()
+    {
+        return $this->hasMany(DetailPendapatan::class, 'id_distribusi', 'id');
+    }
 }

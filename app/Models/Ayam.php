@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\CatatAyam;
+use App\Models\DetailAyam;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class DataAyam extends Model
+class Ayam extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_ayam';
+    protected $table = 'tb_ayam';
 
     protected $fillable = [
         'tanggal_masuk',
@@ -18,12 +18,12 @@ class DataAyam extends Model
         'harga_satuan',
         'total_harga',
         'mati',
-        'total_ayam'
+        'total_ayam',
     ];
 
-    public function catatayam()
+    public function detailayam()
     {
-        return $this->hasMany(CatatAyam::class, 'id_ayam', 'id');
+        return $this->hasMany(DetailAyam::class, 'id_ayam', 'id');
     }
 
 }
