@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PengeluaranAyamController;
+use App\Http\Controllers\PengeluaranPakanController;
+use App\Http\Controllers\PengeluaranVaksinController;
+use App\Http\Controllers\PengeluaranGajiController;
 use App\Http\Controllers\AyamController;
 use App\Http\Controllers\AuthController;
 
