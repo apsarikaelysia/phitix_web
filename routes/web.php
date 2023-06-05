@@ -1,15 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DistribusiController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\GajiController;
+use App\Http\Controllers\VaksinController;
+use App\Http\Controllers\PakanController;
 use App\Http\Controllers\PengeluaranAyamController;
 use App\Http\Controllers\PengeluaranPakanController;
 use App\Http\Controllers\PengeluaranVaksinController;
 use App\Http\Controllers\PengeluaranGajiController;
-use App\Http\Controllers\AyamController;
+use App\Http\Controllers\PendapatanController;
+use App\Http\Controllers\PenghasilanController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\VaksinController;
-use App\Http\Controllers\PakanController;
-use App\Http\Controllers\UserController;
 
 
 /*
