@@ -7,6 +7,10 @@ use App\Http\Controllers\PengeluaranVaksinController;
 use App\Http\Controllers\PengeluaranGajiController;
 use App\Http\Controllers\AyamController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VaksinController;
+use App\Http\Controllers\PakanController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
