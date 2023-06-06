@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AyamController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DistribusiController;
 use App\Http\Controllers\UserController;
