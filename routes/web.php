@@ -52,10 +52,6 @@ Route::post('/datauser', [UserController::class, 'store'])->middleware('IsLogin'
 Route::put('/datauser/{id}', [UserController::class, 'update'])->middleware('IsLogin');
 Route::delete('/datauser/{id}', [UserController::class, 'destroy'])->middleware('IsLogin');
 
-// route::get('/datatenagakerja', [GajiController::class, 'index'])->middleware('IsLogin');
-// route::post('/datatenagakerja', [GajiController::class, 'store'])->middleware('IsLogin');
-// route::put('/datatenagakerja/{id}', [GajiController::class, 'update'])->middleware('IsLogin');
-// route::delete('/datatenagakerja/{id}', [GajiController::class, 'destroy'])->middleware('IsLogin');
 
 route::get('/dataovk', [VaksinController::class, 'index'])->middleware('IsLogin');
 route::post('/dataovk', [VaksinController::class, 'store'])->middleware('IsLogin');
