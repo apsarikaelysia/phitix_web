@@ -147,9 +147,10 @@ class DistribusiController extends Controller
 
         $dataayambulanini = Ayam::where('tanggal_masuk', '!=', null)->whereMonth('tanggal_masuk', date('m'))->first();
 
-        if ($dataayambulanini == null) {
-            return redirect('/datadistribusi2')->with('tidakbisaedit', 'Tidak bisa edit data ayam pada bulan sebelumnya');
+        if ($dataayambulanini == null && $dataayambulanini == '1') {
+            return redirect('/datadistribusi2')->with('tidakbisahapus', 'Data Ayam Bulan Ini Tidak Cukup');
         } else {
+
             $dataayambulanini->update([
                 'total_ayam' => $dataayambulanini->total_ayam + $totalayam,
             ]);
@@ -157,9 +158,7 @@ class DistribusiController extends Controller
             Distribusi::where('id', $id)->delete();
             return redirect('/datadistribusi2')->with('delete', 'Data Berhasil Dihapus');
 
-
         }
-
 
     }
 

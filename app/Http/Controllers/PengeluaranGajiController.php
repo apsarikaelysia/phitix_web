@@ -16,6 +16,7 @@ class PengeluaranGajiController extends Controller
             ->join('tb_detail_pengeluaran_gaji', 'tb_pengeluaran_gaji.id', '=', 'tb_detail_pengeluaran_gaji.id_pengeluaran_gaji')
             ->join('tb_gaji', 'tb_detail_pengeluaran_gaji.id_gaji', '=', 'tb_gaji.id')
             ->select('tb_pengeluaran_gaji.*', DB::raw('SUM(tb_gaji.gaji) as total'))
+            ->orderBy('tb_pengeluaran_gaji.tanggal', 'desc')
             ->groupBy('tb_pengeluaran_gaji.id')
             ->get();
 

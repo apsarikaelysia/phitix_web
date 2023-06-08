@@ -26,7 +26,7 @@ class PenghasilanController extends Controller
         $datapengeluaranayam = DB::table('tb_pengeluaran_ayam')
             ->join('tb_detail_pengeluaran_ayam', 'tb_pengeluaran_ayam.id', '=', 'tb_detail_pengeluaran_ayam.id_pengeluaran_ayam')
             ->join('tb_ayam', 'tb_detail_pengeluaran_ayam.id_ayam', '=', 'tb_ayam.id')
-            ->select('tb_pengeluaran_ayam.*', DB::raw('SUM(tb_ayam.total_harga) as total'), DB::raw('SUM(tb_ayam.total_ayam) as jumlahayam'), )
+            ->select('tb_pengeluaran_ayam.*', DB::raw('SUM(tb_ayam.total_harga) as total'), DB::raw('SUM(tb_ayam.jumlah_masuk) as jumlahayam'), )
             ->orderBy('tb_pengeluaran_ayam.tanggal', 'desc')
             ->groupBy('tb_pengeluaran_ayam.id')
             ->get();
@@ -47,13 +47,13 @@ class PenghasilanController extends Controller
             ->groupBy('tb_pengeluaran_pakan.id')
             ->get();
 
-        $datapengeluarangaji = DB::table('tb_pengeluaran_gaji')
-            ->join('tb_detail_pengeluaran_gaji', 'tb_pengeluaran_gaji.id', '=', 'tb_detail_pengeluaran_gaji.id_pengeluaran_gaji')
-            ->join('tb_gaji', 'tb_detail_pengeluaran_gaji.id_gaji', '=', 'tb_gaji.id')
-            ->select('tb_pengeluaran_gaji.*', DB::raw('SUM(tb_gaji.gaji) as total'))
-            ->orderBy('tb_pengeluaran_gaji.tanggal', 'desc')
-            ->groupBy('tb_pengeluaran_gaji.id')
-            ->get();
+        // $datapengeluarangaji = DB::table('tb_pengeluaran_gaji')
+        //     ->join('tb_detail_pengeluaran_gaji', 'tb_pengeluaran_gaji.id', '=', 'tb_detail_pengeluaran_gaji.id_pengeluaran_gaji')
+        //     ->join('tb_gaji', 'tb_detail_pengeluaran_gaji.id_gaji', '=', 'tb_gaji.id')
+        //     ->select('tb_pengeluaran_gaji.*', DB::raw('SUM(tb_gaji.gaji) as total'))
+        //     ->orderBy('tb_pengeluaran_gaji.tanggal', 'desc')
+        //     ->groupBy('tb_pengeluaran_gaji.id')
+        //     ->get();
 
         $datapenghasilan = Penghasilan::all();
 
@@ -63,7 +63,7 @@ class PenghasilanController extends Controller
             'datapengeluaranayam' => $datapengeluaranayam,
             'datapengeluaranvaksin' => $datapengeluaranvaksin,
             'datapengeluaranpakan' => $datapengeluaranpakan,
-            'datapengeluarangaji' => $datapengeluarangaji,
+            // 'datapengeluarangaji' => $datapengeluarangaji,
         ]);
 
     }
@@ -75,7 +75,7 @@ class PenghasilanController extends Controller
             'pendapatan' => 'required|numeric|integer',
             'pengeluaran_ayam' => 'required|numeric|integer',
             'pengeluaran_pakan' => 'required|numeric|integer',
-            'pengeluaran_gaji' => 'required|numeric|integer',
+            // 'pengeluaran_gaji' => 'required|numeric|integer',
             'pengeluaran_vaksin' => 'required|numeric|integer',
 
         ], [
@@ -90,22 +90,22 @@ class PenghasilanController extends Controller
                 'pengeluaran_pakan' => 'Pengeluaran Pakan harus diisi!',
                 'pengeluaran_pakan.numeric' => 'Pengeluaran Pakan harus berupa angka!',
                 'pengeluaran_pakan.integer' => 'Pengeluaran Pakan harus berupa angka!',
-                'pengeluaran_gaji' => 'Pengeluaran Gaji harus diisi!',
-                'pengeluaran_gaji.numeric' => 'Pengeluaran Gaji harus berupa angka!',
-                'pengeluaran_gaji.integer' => 'Pengeluaran Gaji harus berupa angka!',
+                // 'pengeluaran_gaji' => 'Pengeluaran Gaji harus diisi!',
+                // 'pengeluaran_gaji.numeric' => 'Pengeluaran Gaji harus berupa angka!',
+                // 'pengeluaran_gaji.integer' => 'Pengeluaran Gaji harus berupa angka!',
                 'pengeluaran_vaksin' => 'Pengeluaran Vaksin harus diisi!',
                 'pengeluaran_vaksin.numeric' => 'Pengeluaran Vaksin harus berupa angka!',
                 'pengeluaran_vaksin.integer' => 'Pengeluaran Vaksin harus berupa angka!',
             ]);
 
-        $penghasilan = $request->pendapatan - ($request->pengeluaran_ayam + $request->pengeluaran_pakan + $request->pengeluaran_gaji + $request->pengeluaran_vaksin);
+        $penghasilan = $request->pendapatan - ($request->pengeluaran_ayam + $request->pengeluaran_pakan + $request->pengeluaran_vaksin);
 
         Penghasilan::create([
             'tanggal' => $request->tanggal,
             'pendapatan' => $request->pendapatan,
             'pengeluaran_ayam' => $request->pengeluaran_ayam,
             'pengeluaran_pakan' => $request->pengeluaran_pakan,
-            'pengeluaran_gaji' => $request->pengeluaran_gaji,
+            // 'pengeluaran_gaji' => $request->pengeluaran_gaji,
             'pengeluaran_vaksin' => $request->pengeluaran_vaksin,
             'penghasilan' => $penghasilan,
 
@@ -122,7 +122,7 @@ class PenghasilanController extends Controller
             'pendapatan' => 'required|numeric|integer',
             'pengeluaran_ayam' => 'required|numeric|integer',
             'pengeluaran_pakan' => 'required|numeric|integer',
-            'pengeluaran_gaji' => 'required|numeric|integer',
+            // 'pengeluaran_gaji' => 'required|numeric|integer',
             'pengeluaran_vaksin' => 'required|numeric|integer',
 
         ], [
@@ -131,27 +131,27 @@ class PenghasilanController extends Controller
                 'pendapatan' => 'Pendapatan harus diisi!',
                 'pengeluaran_ayam.numeric' => 'Pengeluaran Ayam harus berupa angka!',
                 'pengeluaran_pakan.numeric' => 'Pengeluaran Pakan harus berupa angka!',
-                'pengeluaran_gaji.numeric' => 'Pengeluaran Gaji harus berupa angka!',
+                // 'pengeluaran_gaji.numeric' => 'Pengeluaran Gaji harus berupa angka!',
                 'pengeluaran_vaksin.numeric' => 'Pengeluaran Vaksin harus berupa angka!',
                 'pendapatan.integer' => 'Pendapatan harus berupa angka!',
                 'pengeluaran_ayam.integer' => 'Pengeluaran Ayam harus berupa angka!',
                 'pengeluaran_pakan.integer' => 'Pengeluaran Pakan harus berupa angka!',
-                'pengeluaran_gaji.integer' => 'Pengeluaran Gaji harus berupa angka!',
+                // 'pengeluaran_gaji.integer' => 'Pengeluaran Gaji harus berupa angka!',
                 'pengeluaran_ayam' => 'Pengeluaran Ayam harus diisi!',
                 'pengeluaran_pakan' => 'Pengeluaran Pakan harus diisi!',
-                'pengeluaran_gaji' => 'Pengeluaran Gaji harus diisi!',
+                // 'pengeluaran_gaji' => 'Pengeluaran Gaji harus diisi!',
                 'pengeluaran_vaksin' => 'Pengeluaran Vaksin harus diisi!',
             ], [
 
             ]);
 
-        $penghasilan = (($request->pendapatan) - ($request->pengeluaran_ayam + $request->pengeluaran_pakan + $request->pengeluaran_gaji + $request->pengeluaran_vaksin));
+        $penghasilan = (($request->pendapatan) - ($request->pengeluaran_ayam + $request->pengeluaran_pakan + $request->pengeluaran_vaksin));
         Penghasilan::where('id', $id)->update([
             'tanggal' => $request->tanggal,
             'pendapatan' => $request->pendapatan,
             'pengeluaran_ayam' => $request->pengeluaran_ayam,
             'pengeluaran_pakan' => $request->pengeluaran_pakan,
-            'pengeluaran_gaji' => $request->pengeluaran_gaji,
+            // 'pengeluaran_gaji' => $request->pengeluaran_gaji,
             'pengeluaran_vaksin' => $request->pengeluaran_vaksin,
             'penghasilan' => $penghasilan,
         ]);

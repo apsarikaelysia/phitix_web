@@ -16,6 +16,7 @@ class PengeluaranVaksinController extends Controller
             ->join('tb_detail_pengeluaran_vaksin', 'tb_pengeluaran_vaksin.id', '=', 'tb_detail_pengeluaran_vaksin.id_pengeluaran_vaksin')
             ->join('tb_vaksin', 'tb_detail_pengeluaran_vaksin.id_vaksin', '=', 'tb_vaksin.id')
             ->select('tb_pengeluaran_vaksin.*', DB::raw('SUM(tb_vaksin.total_biaya) as total'), DB::raw('SUM(tb_vaksin.jumlah_ayam) as jumlahayam'), )
+            ->orderBy('tb_pengeluaran_vaksin.tanggal', 'desc')
             ->groupBy('tb_pengeluaran_vaksin.id')
             ->get();
 

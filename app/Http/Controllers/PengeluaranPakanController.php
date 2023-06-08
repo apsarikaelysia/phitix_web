@@ -16,6 +16,7 @@ class PengeluaranPakanController extends Controller
             ->join('tb_detail_pengeluaran_pakan', 'tb_pengeluaran_pakan.id', '=', 'tb_detail_pengeluaran_pakan.id_pengeluaran_pakan')
             ->join('tb_pakan', 'tb_detail_pengeluaran_pakan.id_pakan', '=', 'tb_pakan.id')
             ->select('tb_pengeluaran_pakan.*', DB::raw('SUM(tb_pakan.total_harga) as total'), DB::raw('SUM(tb_pakan.stok_pakan) as totalpakan'), )
+            ->orderBy('tb_pengeluaran_pakan.tanggal', 'desc')
             ->groupBy('tb_pengeluaran_pakan.id')
             ->get();
 
