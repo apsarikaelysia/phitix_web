@@ -16,7 +16,6 @@ use App\Http\Controllers\PendapatanController;
 use App\Http\Controllers\PenghasilanController;
 use App\Http\Controllers\AuthController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +26,7 @@ use App\Http\Controllers\AuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 route::get('/', [AuthController::class, 'index']);
 route::get('/login', [AuthController::class, 'index'])->middleware('IsStay');
@@ -52,6 +52,10 @@ Route::post('/datauser', [UserController::class, 'store'])->middleware('IsLogin'
 Route::put('/datauser/{id}', [UserController::class, 'update'])->middleware('IsLogin');
 Route::delete('/datauser/{id}', [UserController::class, 'destroy'])->middleware('IsLogin');
 
+// route::get('/datatenagakerja', [GajiController::class, 'index'])->middleware('IsLogin');
+// route::post('/datatenagakerja', [GajiController::class, 'store'])->middleware('IsLogin');
+// route::put('/datatenagakerja/{id}', [GajiController::class, 'update'])->middleware('IsLogin');
+// route::delete('/datatenagakerja/{id}', [GajiController::class, 'destroy'])->middleware('IsLogin');
 
 route::get('/dataovk', [VaksinController::class, 'index'])->middleware('IsLogin');
 route::post('/dataovk', [VaksinController::class, 'store'])->middleware('IsLogin');
