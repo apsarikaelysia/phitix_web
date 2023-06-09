@@ -35,7 +35,7 @@ class ApiDataOvkController extends Controller
 
     public function read()
     {
-        $ovk = Vaksin::orderByDesc('id')->get();
+        $ovk = Vaksin::whereNotNull('tanggal_ovk')->orderByDesc('id')->get();
 
         return response()->json([
             'message' => "success",
@@ -45,7 +45,7 @@ class ApiDataOvkController extends Controller
 
     public function readIdTerakhir()
     {
-        $ovk = Vaksin::orderByDesc('id')->first();
+        $ovk = Vaksin::whereNotNull('tanggal_ovk')->orderByDesc('id')->first();
 
         return response()->json([
             'message' => "success",

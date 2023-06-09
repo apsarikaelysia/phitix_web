@@ -34,7 +34,7 @@ class ApiDataPakanController extends Controller
 
     public function read()
     {
-        $datapakan = Pakan::orderByDesc('id')->get();
+        $datapakan = Pakan::whereNotNull('pembelian')->orderByDesc('id')->get();
 
         return response()->json([
             'message' => "success",
