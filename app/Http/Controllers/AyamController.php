@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ayam;
+use App\Models\DetailAyam;
 use App\Models\Distribusi;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -102,13 +103,13 @@ class AyamController extends Controller
             return redirect('/dataayam')->with('jumlahayamjuallebih', 'Jumlah Ayam Terjual Lebih Banyak Dari Jumlah Ayam');
         } else {
 
-            if ($request->jumlah_masuk >= $jumlahmasuklama) {
-                $totalayam = $totalayamlama + ($request->jumlah_masuk - $jumlahmasuklama);
+            if ($request->jumlah_masuk >= $jumlahmasuklama) { // Jika Jumlah Masuk Baru Lebih Besar Dari Jumlah Masuk Lama
+                $totalayam = $totalayamlama + ($request->jumlah_masuk - $jumlahmasuklama); // Total Ayam Lama Ditambah Jumlah Masuk Baru - Jumlah Masuk Lama
 
-                if ($request->mati >= $dataayammatilama) {
-                    $totalayamakhir = $totalayam - ($request->mati - $dataayammatilama);
+                if ($request->mati >= $dataayammatilama) { // Jika Jumlah Mati Baru Lebih Besar Dari Jumlah Mati Lama
+                    $totalayamakhir = $totalayam - ($request->mati - $dataayammatilama); // Total Ayam Lama Dikurang Jumlah Mati Baru - Jumlah Mati Lama
 
-                    $totalharga = $request->harga_satuan * $request->jumlah_masuk;
+                    $totalharga = $request->harga_satuan * $request->jumlah_masuk; // Total Harga Baru
 
                     Ayam::find($id)->update([
                         'jumlah_masuk' => $request->jumlah_masuk,
@@ -199,12 +200,16 @@ class AyamController extends Controller
         //     return redirect('/dataayam')->with('delete', 'Data Berhasil Dihapus');
         // }
 
+        $detailpengeluaranayam = DetailAyam::where('id_ayam', $id)->first();
+
         $cekdataayam = Ayam::whereMonth('tanggal_masuk', date('m'))->whereYear('tanggal_masuk', date('Y'))->first();
 
         $cekdatadistributor = Distribusi::wheremonth('tanggal', date('m'))->whereyear('tanggal', date('Y'))->first();
 
         if ($cekdatadistributor) {
             return redirect('/dataayam')->with('punyarelasi', 'Data ayam tidak bisa dihapus karena sudah ada data distribusi bulan ini');
+        } elseif ($detailpengeluaranayam) {
+            return redirect('/dataayam')->with('punyarelasi2', 'Data ayam tidak bisa dihapus karena sudah ada data pengeluaran ayam bulan ini');
         } elseif ($cekdataayam == null or $cekdataayam == '1') {
             return redirect('/dataayam')->with('tidakbisahapus', 'Data ayam tidak bisa dihapus karena sudah ada data ayam bulan ini');
         } else {
