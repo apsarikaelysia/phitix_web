@@ -59,13 +59,15 @@ class DatabaseSeeder extends Seeder
             'total_ayam' => null,
         ]);
 
-        Gaji::create([
-            'tanggal' => null,
-            'nama_karyawan' => null,
-            'jabatan' => null,
-            'gaji' => 0,
-
+        Ayam::create([
+            'tanggal_masuk' => date('Y-m-d'),
+            'jumlah_masuk' => 250,
+            'harga_satuan' => 20000,
+            'total_harga' => 5000000,
+            'mati' => 0,
+            'total_ayam' => 250,
         ]);
+
 
         Pakan::create([
             'pembelian' => null,
@@ -74,6 +76,15 @@ class DatabaseSeeder extends Seeder
             'harga_kg' => null,
             'total_harga' => 0,
             'sisa_stok_pakan' => null,
+        ]);
+
+        Pakan::create([
+            'pembelian' => date('Y-m-d'),
+            'jenis_pakan' => 'starter',
+            'stok_pakan' => 1000,
+            'harga_kg' => 10000,
+            'total_harga' => 10000000,
+            'sisa_stok_pakan' => 1000,
         ]);
 
         Vaksin::create([
@@ -86,6 +97,15 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
+        Vaksin::create([
+            'tanggal_ovk' => date('Y-m-d'),
+            'next_ovk' => date('Y-m-d', strtotime('+7 days')),
+            'jenis_ovk' => 'ND',
+            'jumlah_ayam' => 250,
+            'biaya_ovk' => 10000,
+            'total_biaya' => 2500000,
+        ]);
+
         Distribusi::create([
             'customer' => null,
             'tanggal' => null,
@@ -94,5 +114,6 @@ class DatabaseSeeder extends Seeder
             'harga_satuan' => null,
             'payment' => 0,
         ]);
+
     }
 }
