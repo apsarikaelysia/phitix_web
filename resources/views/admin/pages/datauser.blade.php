@@ -1,12 +1,12 @@
 @extends('admin.layout.main')
 
-@section('title', 'Data OVK')
+@section('title', 'Data User')
 
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2 class="mb-2 page-title">Data OVK</h2>
+                <h2 class="mb-2 page-title">Data User</h2>
                 {{-- <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool,
                     built upon the foundations of progressive enhancement, that adds all of these advanced features to any
                     HTML table. </p> --}}
@@ -43,13 +43,8 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-
-                                            <th>Tanggal OVK</th>
-                                            <th>Jenis OVK</th>
-                                            <th>Jumlah Ayam</th>
-                                            <th>Biaya OVK</th>
-                                            <th>Total Biaya</th>
-                                            <th>Next OVK</th>
+                                            <th>Email</th>
+                                            <th>Full Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -57,15 +52,11 @@
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($vaksin as $data)
+                                        @foreach ($userdetail as $data)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $data->tanggal_ovk }}</td>
-                                                <td>{{ $data->jenis_ovk }}</td>
-                                                <td>{{ $data->jumlah_ayam }} Ekor</td>
-                                                <td>Rp. {{ number_format($data->biaya_ovk) }}</td>
-                                                <td>Rp. {{ number_format($data->total_biaya) }}</td>
-                                                <td>{{ $data->next_ovk }}</td>
+                                                <td>{{ $data->email }}</td>
+                                                <td>{{ $data->nama }}</td>
                                                 <td>
 
                                                     <button class="btn btn-warning btn-sm" data-toggle="modal"
@@ -92,7 +83,7 @@
                                                         <div class="modal-body">
                                                             Yakin Ingin Menghapus Data?
                                                         </div>
-                                                        <form action="/dataovk/{{ $data->id }}" method="post">
+                                                        <form action="/datauser/{{ $data->id }}" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <div class="modal-footer">
@@ -118,51 +109,38 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <form action="/dataovk/{{ $data->id }}" method="POST">
+                                                        <form action="/datauser/{{ $data->id }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-body">
-
                                                                 <div class="form-group">
-                                                                    <label for="recipient-name"
-                                                                        class="col-form-label">Tanggal
-                                                                        Ovk</label>
-                                                                    <input type="date" value="{{ $data->tanggal_ovk }}"
-                                                                        name="tanggal_ovk" class="form-control"
+                                                                    <label for="recipient-name" class="col-form-label">Email
+                                                                    </label>
+                                                                    <input type="email" value="{{ $data->email }}"
+                                                                        name="email" class="form-control"
                                                                         id="recipient-name">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Jenis
-                                                                        Ovk</label>
-                                                                    <input type="text" value="{{ $data->jenis_ovk }}"
-                                                                        name="jenis_ovk" class="form-control"
+                                                                    <label for="recipient-name" class="col-form-label">Full
+                                                                        Name</label>
+                                                                    <input type="text" value=" {{ $data->nama }}"
+                                                                        name="nama" class="form-control"
                                                                         id="recipient-name">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name"
-                                                                        class="col-form-label">Jumlah Ayam
-                                                                    </label>
-                                                                    <input type="text" value="{{ $data->jumlah_ayam }}"
-                                                                        name="jumlah_ayam" class="form-control"
-                                                                        id="recipient-name">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Next
-                                                                        Ovk
-                                                                    </label>
-                                                                    <input type="date" value="{{ $data->next_ovk }}"
-                                                                        name="next_ovk" class="form-control"
-                                                                        id="recipient-name">
+                                                                        class="col-form-label">Password</label>
+                                                                    <input type="password" value="" name="password"
+                                                                        class="form-control" id="recipient-name">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name"
-                                                                        class="col-form-label">Biaya Ovk
+                                                                        class="col-form-label">Password Confirmation
                                                                     </label>
-                                                                    <input type="text" value=" {{ $data->biaya_ovk }}"
-                                                                        name="biaya_ovk" class="form-control"
+                                                                    <input type="password" value=""
+                                                                        name="repassword" class="form-control"
                                                                         id="recipient-name">
                                                                 </div>
-
 
                                                             </div>
                                                             <div class="modal-footer">
@@ -190,50 +168,42 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form action="/dataovk" method="POST">
+                                            <form action="/datauser" method="POST">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-body">
-
                                                     <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Tanggal
-                                                            Ovk</label>
-                                                        <input type="date" value="" name="tanggal_ovk"
-                                                            class="form-control" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Jenis
-                                                            Ovk</label>
-                                                        <input type="text" value="" name="jenis_ovk"
-                                                            class="form-control" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Jumlah Ayam
+                                                        <label for="recipient-name" class="col-form-label">Email
                                                         </label>
-                                                        <input type="text" value="" name="jumlah_ayam"
+                                                        <input type="email" value="" name="email"
                                                             class="form-control" id="recipient-name">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Next
-                                                            Ovk
-                                                        </label>
-                                                        <input type="date" value="" name="next_ovk"
+                                                        <label for="recipient-name" class="col-form-label">Full
+                                                            Name</label>
+                                                        <input type="text" value="" name="nama"
                                                             class="form-control" id="recipient-name">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Biaya Ovk
-                                                        </label>
-                                                        <input type="text" value="" name="biaya_ovk"
+                                                        <label for="recipient-name"
+                                                            class="col-form-label">Password</label>
+                                                        <input type="password" value="" name="password"
                                                             class="form-control" id="recipient-name">
                                                     </div>
-
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="col-form-label">Password
+                                                            Confirmation
+                                                        </label>
+                                                        <input type="password" value="" name="repassword"
+                                                            class="form-control" id="recipient-name">
+                                                    </div>
 
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn mb-2 btn-danger"
                                                         data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn mb-2 btn-success">Save
-                                                        changes</button>
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
@@ -356,15 +326,6 @@
             Swal.fire(
                 'Success',
                 'Data Gagal Ditambahkan',
-                'error'
-            )
-        </script>
-    @endif
-    @if (Session::get('punyarelasi'))
-        <script>
-            Swal.fire(
-                'Error',
-                'Data vaksin terhubung dengan data pengeluaran vaksin',
                 'error'
             )
         </script>

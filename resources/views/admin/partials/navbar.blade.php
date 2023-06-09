@@ -12,18 +12,18 @@
                 <i class="fe fe-sun fe-16"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-shortcut">
-                <span class="fe fe-grid fe-16"></span>
-            </a>
-        </li>
         <li class="nav-item nav-notif">
-            <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
-                <span class="fe fe-bell fe-16"></span>
-                <span class="dot dot-md bg-success"></span>
+            <a class="nav-link dropdown-toggle text-muted my-2" href="./#" id="navbarDropdownMenuLink"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fe fe-user fe-16"></span>
             </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profilModal">Profile</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            </div>
         </li>
-        <li class="nav-item dropdown">
+
+        {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink"
                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="avatar avatar-sm mt-2">
@@ -32,10 +32,8 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profilModal">Profile</a>
-                <a class="dropdown-item" href="#">Settings</a>
-                <a class="dropdown-item" href="#">Activities</a>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
             </div>
-        </li>
+        </li> --}}
     </ul>
 </nav>

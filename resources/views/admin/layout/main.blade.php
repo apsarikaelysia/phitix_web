@@ -15,6 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <!-- Icons CSS -->
+    <link rel="stylesheet" href="{{ asset('admin/css/datatablesbutton.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/feather.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/select2.css') }}">
@@ -26,6 +27,7 @@
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('admin/css/daterangepicker.css') }}">
     <!-- App CSS -->
+    <link href="{{ asset('admin/vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('admin/css/app-light.css') }}" id="lightTheme">
     <link rel="stylesheet" href="{{ asset('admin/css/app-dark.css') }}" id="darkTheme" disabled>
 </head>
@@ -176,27 +178,50 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form>
+                        <form action="/update-profile/{{ Auth::User()->id }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Label</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <label for="recipient-name" class="col-form-label">Name</label>
+                                    <input type="text" name="nama" value="{{ Auth::User()->nama }}"
+                                        class="form-control" id="recipient-name">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Label</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                    <label for="recipient-name" class="col-form-label">Email</label>
+                                    <input type="email" name="email" value="{{ Auth::User()->email }}"
+                                        class="form-control" id="recipient-name">
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn mb-2 btn-danger" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn mb-2 btn-success">Save changes</button>
-                        </div>
+
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Old Password</label>
+                                    <input type="password" name="oldpassword" class="form-control"
+                                        id="recipient-name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" id="recipient-name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Repassword</label>
+                                    <input type="password" name="repassword" class="form-control"
+                                        id="recipient-name">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn mb-2 btn-danger"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn mb-2 btn-success">Save changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
 
-            <!-- Delete Modal -->
+            <!-- Logout Modal -->
             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
                 aria-labelledby="defaultModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -212,14 +237,16 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn mb-2 btn-success" data-dismiss="modal">Close</button>
-                            <a href="/login" class="btn mb-2 btn-danger">Yes</a>
+                            <a href="/logout" class="btn mb-2 btn-danger">Yes</a>
                         </div>
                     </div>
                 </div>
             </div>
         </main> <!-- main -->
     </div> <!-- .wrapper -->
-    <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    {{-- <script src="{{ asset('admin/js/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('admin/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin/js/moment.min.js') }}"></script>
     <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
@@ -236,6 +263,14 @@
     <script src="{{ asset('admin/js/Chart.min.js') }}"></script>
     <script src='{{ asset('admin/js/jquery.dataTables.min.js') }}'></script>
     <script src='{{ asset('admin/js/dataTables.bootstrap4.min.js') }}'></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
     <script>
         /* defind global options */
         Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -253,6 +288,11 @@
     <script src='{{ asset('admin/js/dropzone.min.js') }}'></script>
     <script src='{{ asset('admin/js/uppy.min.js') }}'></script>
     <script src='{{ asset('admin/js/quill.min.js') }}'></script>
+    <script src="{{ asset('admin/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('admin/vendor/sweetalert.init.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $('.select2').select2({
             theme: 'bootstrap4',
@@ -437,6 +477,9 @@
         gtag('config', 'UA-56159088-1');
     </script>
     @yield('script')
+
 </body>
 
 </html>
+
+@yield('sweetalert')

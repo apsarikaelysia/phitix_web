@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vaksin;
+use App\Models\DetailVaksin;
 
 class VaksinController extends Controller
 {
@@ -93,7 +94,16 @@ class VaksinController extends Controller
 
     public function destroy($id)
     {
-        Vaksin::find($id)->delete();
-        return redirect('/dataovk')->with('delete', 'Data Berhasil Dihapus');
+        $detailpengecekan = DetailVaksin::where('id_vaksin', $id)->get();
+
+        if ($detailpengecekan->count() > 0) {
+            return redirect('/dataovk')->with('punyarelasi', 'Data Gagal Dihapus, Data Masih Digunakan');
+        } else {
+
+            Vaksin::find($id)->delete();
+            return redirect('/dataovk')->with('delete', 'Data Berhasil Dihapus');
+        }
+
+
     }
 }

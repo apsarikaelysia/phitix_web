@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pakan;
 use Illuminate\Http\Request;
+use App\Models\DetailPakan;
 
 class PakanController extends Controller
 {
@@ -95,8 +96,16 @@ class PakanController extends Controller
 
     public function destroy($id)
     {
-        Pakan::find($id)->delete();
-        return redirect('/datapakan')->with('delete', 'Data Berhasil Dihapus');
+        $detailpengeluaranpakan = DetailPakan::where('id_pakan', $id)->get();
+
+        if ($detailpengeluaranpakan->count() > 0) {
+            return redirect('/datapakan')->with('punyarelasi', 'Data Gagal Dihapus, Data Masih Digunakan');
+        } else {
+
+            Pakan::find($id)->delete();
+            return redirect('/datapakan')->with('delete', 'Data Berhasil Dihapus');
+        }
+
     }
 
 }

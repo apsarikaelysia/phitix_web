@@ -18,7 +18,6 @@ class Penghasilan extends Model
         'pendapatan',
         'pengeluaran_ayam',
         'pengeluaran_pakan',
-        // 'pengeluaran_gaji',
         'pengeluaran_vaksin',
         'penghasilan',
     ];

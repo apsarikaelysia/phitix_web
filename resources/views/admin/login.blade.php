@@ -26,7 +26,8 @@
 <body class="light ">
     <div class="wrapper vh-100">
         <div class="row align-items-center h-100">
-            <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+            <form action="/login" method="POST" class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+                @csrf
                 <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
                     <svg version="1.1" id="logo" class="navbar-brand-img brand-md"
                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
@@ -39,27 +40,25 @@
                     </svg>
                 </a>
                 <h1 class="h6 mb-3">Sign in</h1>
+
                 <div class="form-group">
                     <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" class="form-control form-control-lg"
-                        placeholder="Email address" required="" autofocus="">
+                    <input type="email" name="email" id="inputEmail" value="{{ Session::get('email') }}"
+                        class="form-control form-control-lg" placeholder="Email address" required="" autofocus="">
                 </div>
                 <div class="form-group">
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control form-control-lg"
-                        placeholder="Password" required="">
+                    <input type="password" name="password" id="inputPassword" value="{{ Session::get('password') }}"
+                        class="form-control form-control-lg" placeholder="Password" required="">
                 </div>
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Stay logged in </label>
-                </div>
-                {{-- <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button> --}}
-                <a href="/index" class="btn btn-lg btn-primary btn-block">Login</a>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
                 <p class="mt-5 mb-3 text-muted">© 2020</p>
             </form>
         </div>
     </div>
-    <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    {{-- <script src="{{ asset('admin/js/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('admin/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin/js/moment.min.js') }}"></script>
     <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
@@ -69,6 +68,7 @@
     <script src="{{ asset('admin/js/tinycolor-min.js') }}"></script>
     <script src="{{ asset('admin/js/config.js') }}"></script>
     <script src="{{ asset('admin/js/apps.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
@@ -83,6 +83,37 @@
 </body>
 
 </html>
-</body>
 
-</html>
+@if (Session::get('belumlogin'))
+    <script>
+        Swal.fire(
+            'Opps',
+            'Silahkan Login Dulu',
+            'error'
+        )
+    </script>
+@endif
+
+@if (Session::get('loginerror'))
+    <script>
+        Swal.fire("Opps Error", "Login Gagal", "error");
+    </script>
+@endif
+
+@if (Session::get('bukanadmin'))
+    <script>
+        Swal.fire("Opps Error", "Anda Bukan Super Admin", "error");
+    </script>
+@endif
+
+@if (Session::get('failed'))
+    <script>
+        Swal.fire("Opps Error", "Login Gagal", "error");
+    </script>
+@endif
+
+@if (Session::get('logout'))
+    <script>
+        Swal.fire("Well Done", "Anda Berhasil Logout", "success");
+    </script>
+@endif

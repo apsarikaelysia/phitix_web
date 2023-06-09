@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ayam;
 use Illuminate\Http\Request;
 use App\Models\Distribusi;
+use App\Models\DetailPendapatan;
 
 class DistribusiController extends Controller
 {
@@ -145,22 +146,27 @@ class DistribusiController extends Controller
         $datadistribusi = Distribusi::where('id', $id)->first();
         $totalayam = $datadistribusi->total_ayam;
 
+        $detailpendapatan = DetailPendapatan::where('id_distribusi', $id)->first();
+
         $cekdatadistribusi = Distribusi::wheremonth('tanggal', date('m'))->whereyear('tanggal', date('Y'))->count();
         $dataayambulanini = Ayam::where('tanggal_masuk', '!=', null)->whereMonth('tanggal_masuk', date('m'))->first();
 
-        if ($dataayambulanini == null or $dataayambulanini == '1' ) {
-            return redirect('/datadistribusi2')->with('tidakbisahapus', 'Data Ayam Bulan Ini Tidak Cukup');
+        if ($detailpendapatan) {
+            return redirect('/datadistribusi2')->with('punyarelasi', 'Data Sudah Ada Di Detail Pendapatan');
         } else {
+            if ($dataayambulanini == null or $dataayambulanini == '1') {
+                return redirect('/datadistribusi2')->with('tidakbisahapus', 'Data Ayam Bulan Ini Tidak Cukup');
+            } else {
 
-            $dataayambulanini->update([
-                'total_ayam' => $dataayambulanini->total_ayam + $totalayam,
-            ]);
+                $dataayambulanini->update([
+                    'total_ayam' => $dataayambulanini->total_ayam + $totalayam,
+                ]);
 
-            Distribusi::where('id', $id)->delete();
-            return redirect('/datadistribusi2')->with('delete', 'Data Berhasil Dihapus');
+                Distribusi::where('id', $id)->delete();
+                return redirect('/datadistribusi2')->with('delete', 'Data Berhasil Dihapus');
 
+            }
         }
-
     }
 
 }

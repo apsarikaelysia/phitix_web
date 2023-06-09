@@ -1,12 +1,12 @@
 @extends('admin.layout.main')
 
-@section('title', 'Data OVK')
+@section('title', 'Data Pengeluaran Vaksin Detail')
 
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2 class="mb-2 page-title">Data OVK</h2>
+                <h2 class="mb-2 page-title">Data Pengeluaran Vaksin Detail</h2>
                 {{-- <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool,
                     built upon the foundations of progressive enhancement, that adds all of these advanced features to any
                     HTML table. </p> --}}
@@ -43,13 +43,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-
-                                            <th>Tanggal OVK</th>
-                                            <th>Jenis OVK</th>
-                                            <th>Jumlah Ayam</th>
-                                            <th>Biaya OVK</th>
-                                            <th>Total Biaya</th>
-                                            <th>Next OVK</th>
+                                            <th>Tanggal</th>
+                                            <th>Jenis Vaksin</th>
+                                            <th>Total Ayam</th>
+                                            <th>Total Harga</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -57,20 +54,14 @@
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($vaksin as $data)
+                                        @foreach ($datapengeluaranvaksin as $data)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $data->tanggal_ovk }}</td>
-                                                <td>{{ $data->jenis_ovk }}</td>
-                                                <td>{{ $data->jumlah_ayam }} Ekor</td>
-                                                <td>Rp. {{ number_format($data->biaya_ovk) }}</td>
-                                                <td>Rp. {{ number_format($data->total_biaya) }}</td>
-                                                <td>{{ $data->next_ovk }}</td>
+                                                <td>{{ $data->vaksin->jenis_ovk }}</td>
+                                                <td>{{ $data->vaksin->tanggal_ovk }}</td>
+                                                <td>{{ $data->vaksin->jumlah_ayam }} Ekor</td>
+                                                <td>Rp. {{ number_format($data->vaksin->total_biaya) }}</td>
                                                 <td>
-
-                                                    <button class="btn btn-warning btn-sm" data-toggle="modal"
-                                                        data-target="#editModal{{ $data->id }}">Edit</button>
-
                                                     <button class="btn btn-danger btn-sm" data-toggle="modal"
                                                         data-target="#deleteModal{{ $data->id }}">Delete</button>
 
@@ -92,7 +83,8 @@
                                                         <div class="modal-body">
                                                             Yakin Ingin Menghapus Data?
                                                         </div>
-                                                        <form action="/dataovk/{{ $data->id }}" method="post">
+                                                        <form action="/deleteidvaksin/{{ $data->vaksin->id }}"
+                                                            method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <div class="modal-footer">
@@ -107,7 +99,7 @@
                                             </div>
 
                                             <!-- Edit Modal -->
-                                            <div class="modal fade" id="editModal{{ $data->id }}" tabindex="-1"
+                                            {{-- <div class="modal fade" id="editModal{{ $data->id }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -118,52 +110,18 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <form action="/dataovk/{{ $data->id }}" method="POST">
+                                                        <form action="/datapendapatan/{{ $data->id }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-body">
-
                                                                 <div class="form-group">
                                                                     <label for="recipient-name"
                                                                         class="col-form-label">Tanggal
-                                                                        Ovk</label>
-                                                                    <input type="date" value="{{ $data->tanggal_ovk }}"
-                                                                        name="tanggal_ovk" class="form-control"
-                                                                        id="recipient-name">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Jenis
-                                                                        Ovk</label>
-                                                                    <input type="text" value="{{ $data->jenis_ovk }}"
-                                                                        name="jenis_ovk" class="form-control"
-                                                                        id="recipient-name">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name"
-                                                                        class="col-form-label">Jumlah Ayam
                                                                     </label>
-                                                                    <input type="text" value="{{ $data->jumlah_ayam }}"
-                                                                        name="jumlah_ayam" class="form-control"
+                                                                    <input type="date" value="{{ $data->tanggal }}"
+                                                                        name="tanggal" class="form-control"
                                                                         id="recipient-name">
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Next
-                                                                        Ovk
-                                                                    </label>
-                                                                    <input type="date" value="{{ $data->next_ovk }}"
-                                                                        name="next_ovk" class="form-control"
-                                                                        id="recipient-name">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name"
-                                                                        class="col-form-label">Biaya Ovk
-                                                                    </label>
-                                                                    <input type="text" value=" {{ $data->biaya_ovk }}"
-                                                                        name="biaya_ovk" class="form-control"
-                                                                        id="recipient-name">
-                                                                </div>
-
-
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn mb-2 btn-danger"
@@ -174,7 +132,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -190,44 +148,33 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form action="/dataovk" method="POST">
+                                            <form action="/addidvaksin" method="POST">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-body">
 
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Tanggal
-                                                            Ovk</label>
-                                                        <input type="date" value="" name="tanggal_ovk"
-                                                            class="form-control" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Jenis
-                                                            Ovk</label>
-                                                        <input type="text" value="" name="jenis_ovk"
-                                                            class="form-control" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Jumlah Ayam
+
+                                                    <div hidden class="form-group">
+                                                        <label for="recipient-name" class="col-form-label">Id Pendapatan
                                                         </label>
-                                                        <input type="text" value="" name="jumlah_ayam"
-                                                            class="form-control" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Next
-                                                            Ovk
-                                                        </label>
-                                                        <input type="date" value="" name="next_ovk"
-                                                            class="form-control" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Biaya Ovk
-                                                        </label>
-                                                        <input type="text" value="" name="biaya_ovk"
-                                                            class="form-control" id="recipient-name">
+                                                        <input type="text" value="{{ $pengeluaranvaksin->id }}"
+                                                            name="id_pengeluaran_vaksin" class="form-control"
+                                                            id="recipient-name">
                                                     </div>
 
-
+                                                    <div class="form-group">
+                                                        <label for="simple-select2">Data Vaksin</label>
+                                                        <select name="id_vaksin" class="form-control">
+                                                            <option selected disabled>Pilih Data Vaksin</option>
+                                                            @foreach ($tampildatavaksin as $vaksin)
+                                                                <option value="{{ $vaksin->id }}">
+                                                                    {{ $vaksin->tanggal_ovk }} -
+                                                                    {{ $vaksin->jenis_ovk }}
+                                                                    - Rp. {{ number_format($vaksin->total_biaya) }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn mb-2 btn-danger"
@@ -360,11 +307,11 @@
             )
         </script>
     @endif
-    @if (Session::get('punyarelasi'))
+    @if (Session::get('sudahada'))
         <script>
             Swal.fire(
                 'Error',
-                'Data vaksin terhubung dengan data pengeluaran vaksin',
+                'Data Sudah Ada',
                 'error'
             )
         </script>
